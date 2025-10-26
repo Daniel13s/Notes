@@ -11,7 +11,7 @@ export default function PopUp () {
     const router = useRouter()
     const {emailContext, setPopUp} = useContext(userContext)!
     async function handdleNote() {
-        await fetch("http://localhost:3000/api/create-post", {
+        await fetch("/api/create-post", {
             method: "POST",
             body: JSON.stringify({
                 email: emailContext,
