@@ -6,10 +6,12 @@ import Link from "next/link";
 import { BiExit, BiPlus } from "react-icons/bi";
 import { FaTrash } from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import { FaSpinner } from "react-icons/fa6";
 
 export default function Home() {
   const [notes, setNotes] = useState([]);
   const [name, setName] = useState("");
+  const [loading, setLoading] = useState(false)
 
   const router = useRouter()
   const { emailContext, setEmailContext, popUp, setPopUp, setClickNote } =
@@ -39,6 +41,7 @@ export default function Home() {
     
     useEffect(() => {
     async function toggleNotes() {
+      setLoading(true)
       const note = await fetch("/api/get-posts", {
         method: "POST",
         body: JSON.stringify({
@@ -47,15 +50,16 @@ export default function Home() {
       }).then((res) => res.json());
       setNotes(note.posts);
       setName(note.name);
+      setLoading(false)
     }
     toggleNotes();
   }, [emailContext]);
   return (
     <div className="h-screen flex flex-col justify-center items-center">
-      <Link href="/"><BiExit size={30}/></Link>
+      <Link href="/"><BiExit size={40}/></Link>
       <h1 className="text-3xl font-bold">Bem vindo, {name}!</h1>
       <section className="h-130 grid grid-cols-3 max-[600px]:grid-cols-2 max-[400px]:grid-cols-1 gap-2 overflow-auto">
-        {notes.map((note: any) => (
+        {loading ? <FaSpinner className="animate-spin" size={50} color="white" /> : notes.map((note: any) => (
           <div
             className="w-50 h-50 bg-blue-50 rounded-2xl flex flex-col items-center justify-around"
             key={note.id}
