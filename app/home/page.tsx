@@ -5,6 +5,7 @@ import PopUp from "../popUp/PopUp";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { BiPlus } from "react-icons/bi";
+import { FaTrash } from "react-icons/fa";
 
 export default function Home() {
   const [notes, setNotes] = useState([]);
@@ -13,6 +14,17 @@ export default function Home() {
   const router = useRouter();
   const { emailContext, setEmailContext, popUp, setPopUp, setClickNote } =
     useContext(userContext)!;
+
+    async function deleteNote(idCLick: string) {
+      await fetch("/api/delete-post", {
+        method: "POST",
+        body: JSON.stringify({
+          id: idCLick,
+          email: emailContext
+        })
+      })
+      window.location.reload()
+    }
 
     useEffect(() => {
       function getEmail() {
@@ -45,19 +57,19 @@ export default function Home() {
       <section className="h-130 grid grid-cols-3 max-[600px]:grid-cols-2 max-[400px]:grid-cols-1 gap-2 overflow-auto">
         {notes.map((note: any) => (
           <div
-            className="w-50 h-50 bg-blue-50 rounded-2xl text-center"
+            className="w-50 h-50 bg-blue-50 rounded-2xl flex flex-col items-center justify-around"
             key={note.id}
-            onClick={() => {
+          >
+            <h1 className="text-xl font-bold">{note.name}</h1>
+            <p onClick={() => {
               setClickNote({
                 id: note.id,
                 name: note.name,
                 description: note.note,
               });
               router.replace(`/edit-note`);
-            }}
-          >
-            <h1 className="text-xl font-bold">{note.name}</h1>
-            <p>{note.note}</p>
+            }}>{note.note}</p>
+            <FaTrash className="" onClick={() => deleteNote(note.id)}/>
           </div>
         ))}
         <button
