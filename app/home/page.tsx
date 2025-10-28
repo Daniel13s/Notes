@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { userContext } from "../context/userProvider";
 import PopUp from "../popUp/PopUp";
 import Link from "next/link";
-import { BiPlus } from "react-icons/bi";
+import { BiExit, BiPlus } from "react-icons/bi";
 import { FaTrash } from "react-icons/fa";
 
 export default function Home() {
@@ -50,7 +50,7 @@ export default function Home() {
   }, [emailContext]);
   return (
     <div className="h-screen flex flex-col justify-center items-center">
-      <Link href="/">Voltar</Link>
+      <Link href="/"><BiExit size={30}/></Link>
       <h1 className="text-3xl font-bold">Bem vindo, {name}!</h1>
       <section className="h-130 grid grid-cols-3 max-[600px]:grid-cols-2 max-[400px]:grid-cols-1 gap-2 overflow-auto">
         {notes.map((note: any) => (
@@ -58,7 +58,7 @@ export default function Home() {
             className="w-50 h-50 bg-blue-50 rounded-2xl flex flex-col items-center justify-around"
             key={note.id}
           >
-            <div onClick={() => {
+            <div className="text-center" onClick={() => {
               setClickNote({
                 id: note.id,
                 name: note.name,

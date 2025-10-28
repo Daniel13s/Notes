@@ -3,6 +3,9 @@ import { useContext, useEffect, useState } from "react"
 import { userContext } from "../context/userProvider"
 import { useRouter } from "next/navigation"
 import { v4 } from "uuid"
+import { BiPlus, BiPlusCircle } from "react-icons/bi"
+import { GiExitDoor } from "react-icons/gi"
+import { ImExit } from "react-icons/im"
 
 export default function PopUp () {
     const [noteName, setNoteName] = useState('')
@@ -26,10 +29,10 @@ export default function PopUp () {
     }
     return (
         <div className="w-70 flex flex-col bg-blue-500 p-5 rounded-2xl gap-2 shadow-black shadow-xs absolute">
-            <button onClick={() => setPopUp(false)}>Voltar</button>
+            <button onClick={() => setPopUp(false)}><ImExit color="white" size={20} /></button>
             <input className="bg-white p-2 rounded-4xl" type="text" placeholder="Note title" onChange={e => setNoteName(e.target.value)}/>
             <input className="bg-white p-2 rounded-4xl" type="text" placeholder="Note" onChange={e => setNote(e.target.value)}/>
-            <button onClick={handdleNote}>Criar tarefa</button>
+            <button className="flex justify-center" onClick={handdleNote}><BiPlusCircle size={35} color="white"/></button>
         </div>
     )
 }
