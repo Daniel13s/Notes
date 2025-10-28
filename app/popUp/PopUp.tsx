@@ -1,5 +1,5 @@
 'use client'
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { userContext } from "../context/userProvider"
 import { useRouter } from "next/navigation"
 import { v4 } from "uuid"
@@ -8,7 +8,6 @@ export default function PopUp () {
     const [noteName, setNoteName] = useState('')
     const [note, setNote] = useState('')
 
-    const router = useRouter()
     const {emailContext, setPopUp} = useContext(userContext)!
     async function handdleNote() {
         await fetch("/api/create-post", {
@@ -23,7 +22,7 @@ export default function PopUp () {
             })
         })
         setPopUp(false)
-        router.refresh()
+        window.location.reload()
     }
     return (
         <div className="w-70 flex flex-col bg-blue-500 p-5 rounded-2xl gap-2 shadow-black shadow-xs absolute">
