@@ -5,11 +5,13 @@ import PopUp from "../popUp/PopUp";
 import Link from "next/link";
 import { BiExit, BiPlus } from "react-icons/bi";
 import { FaTrash } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [notes, setNotes] = useState([]);
   const [name, setName] = useState("");
 
+  const router = useRouter()
   const { emailContext, setEmailContext, popUp, setPopUp, setClickNote } =
     useContext(userContext)!;
 
@@ -63,7 +65,9 @@ export default function Home() {
                 id: note.id,
                 name: note.name,
                 description: note.note,
-              });}}>
+              })
+              router.replace("/edit-note")
+              }}>
               <h1 className="text-xl font-bold">{note.name}</h1>
               <p>{note.note}</p>
             </div>
